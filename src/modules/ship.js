@@ -1,0 +1,1 @@
+/* Ship class for ship objects with varying sizes and functions */
