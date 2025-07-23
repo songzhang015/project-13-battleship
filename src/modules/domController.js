@@ -52,11 +52,10 @@ function createBoardGrid(board, type) {
 	}
 }
 
-function highlightShip(coordinates, orientation, ship) {
+function highlightShip(coordinates, orientation, ship, isValid) {
 	const [r, c] = coordinates;
 	const length = ship.length;
 
-	// Clear previous highlights
 	clearHighlights();
 
 	for (let i = 0; i < length; i++) {
@@ -69,16 +68,22 @@ function highlightShip(coordinates, orientation, ship) {
 			row = r + i;
 		}
 
-		if (row < 0 || row > 9 || col < 0 || col > 9) continue;
+		if (row < 0 || row > 9 || col < 0 || col > 9) {
+			continue;
+		}
 
 		const cell = document.querySelector(`.p-cell[data-coords="${row},${col}"]`);
-		if (cell) cell.classList.add("highlight");
+		if (cell) {
+			cell.classList.add("highlight");
+			cell.style.cursor = isValid ? "pointer" : "not-allowed";
+		}
 	}
 }
 
 function clearHighlights() {
 	document.querySelectorAll(".p-cell.highlight").forEach((cell) => {
 		cell.classList.remove("highlight");
+		cell.style.cursor = "";
 	});
 }
 

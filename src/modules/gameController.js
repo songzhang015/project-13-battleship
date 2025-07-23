@@ -58,7 +58,8 @@ function addPlacementListeners(ship, orientation, resolve) {
 
 	function onMouseEnter() {
 		const coordinates = this.dataset.coords.split(",").map(Number);
-		highlightShip(coordinates, orientation, ship);
+		const isValid = canPlaceShip(coordinates, orientation, ship);
+		highlightShip(coordinates, orientation, ship, isValid);
 	}
 
 	function onMouseLeave() {
