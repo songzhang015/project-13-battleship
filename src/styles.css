@@ -1,5 +1,7 @@
 :root {
-    --bg-color: #121212;
+    --page-bg-color: #0f5e9c;
+    --main-bg-color: #1c2733;
+    --main-bg-bright-color: #6388b0;
     --text-color: rgba(255, 255, 255, 0.9);
 }
 
@@ -11,6 +13,53 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background-color: var(--bg-color);
+    background-color: var(--page-bg-color);
     color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.start-btn {
+    font-size: 1.25rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    border: none;
+    will-change: transform, filter;
+    transition: filter 0.2s, transform 0.2s;
+}
+
+.start-btn:hover {
+    filter: brightness(0.94);
+    transform: scale(1.1);
+}
+
+.main-container {
+    background-color: var(--main-bg-color);
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.player-board, .bot-board {
+    display: grid;
+    grid-template-columns: repeat(10, 3.5rem);
+    grid-template-rows: repeat(10, 3.5rem);
+    gap: 0.25rem;
+}
+
+.p-cell, .b-cell {
+    border: 1px solid white;
+    width: 3.5rem;
+    height: 3.5rem;
+}
+
+.p-cell.highlight {
+    background-color: var(--main-bg-bright-color);
+}
+
+.ship-cell {
+    background-color: orangered;
 }

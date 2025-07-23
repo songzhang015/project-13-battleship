@@ -1,7 +1,9 @@
 /* Index.js */
-// import { } from "./modules/domController.js";
-// import { } from "./modules/gameController.js";
+import { createStartButton } from "./modules/domController.js";
+import { startNewGame } from "./modules/gameController.js";
 
-// import { } from "./modules/player.js";
-// import { } from "./modules/ship.js";
-// import { } from "./modules/gameBoard.js";
+createStartButton();
+
+document.querySelector(".start-btn").addEventListener("click", () => {
+	startNewGame();
+});
