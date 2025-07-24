@@ -13,24 +13,43 @@ function createBoard() {
 	const mainContainer = document.createElement("div");
 	mainContainer.classList.add("main-container");
 
+	const message = document.createElement("h1");
+	message.classList.add("message");
+	message.textContent = "Place your ships";
+	mainContainer.appendChild(message);
+
+	const boardsContainer = document.createElement("div");
+	boardsContainer.classList.add("boards-container");
+	mainContainer.appendChild(boardsContainer);
+
 	const playerContainer = document.createElement("div");
 	playerContainer.classList.add("player-container");
+
+	const playerTitle = document.createElement("h2");
+	playerTitle.classList.add("player-title");
+	playerTitle.textContent = "Player";
 
 	const playerBoard = document.createElement("div");
 	playerBoard.classList.add("player-board");
 
+	playerContainer.appendChild(playerTitle);
 	playerContainer.appendChild(playerBoard);
 
 	const botContainer = document.createElement("div");
 	botContainer.classList.add("bot-container");
 
+	const botTitle = document.createElement("h2");
+	botTitle.classList.add("bot-title");
+	botTitle.textContent = "AI";
+
 	const botBoard = document.createElement("div");
 	botBoard.classList.add("bot-board");
 
+	botContainer.appendChild(botTitle);
 	botContainer.appendChild(botBoard);
 
-	mainContainer.appendChild(playerContainer);
-	mainContainer.appendChild(botContainer);
+	boardsContainer.appendChild(playerContainer);
+	boardsContainer.appendChild(botContainer);
 
 	document.body.appendChild(mainContainer);
 }
