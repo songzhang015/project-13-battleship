@@ -1,7 +1,7 @@
 :root {
     --page-bg-color: #0f5e9c;
     --main-bg-color: #1c2733;
-    --main-bg-bright-color: #6388b0;
+    --main-bg-bright-color: #ffffff4f;
     --text-color: rgba(255, 255, 255, 0.9);
 }
 
@@ -56,6 +56,16 @@ body {
     margin-top: 5vh;
 }
 
+.axis-btn, .reset-btn, .begin-btn {
+    font-size: 1.25rem;
+    padding: 0.25rem 0.5rem;
+    margin-top: 1rem;
+}
+
+.begin-btn.invalid {
+    cursor: not-allowed;
+}
+
 .player-board, .bot-board {
     display: grid;
     grid-template-columns: repeat(10, 3.5rem);
@@ -69,10 +79,30 @@ body {
     height: 3.5rem;
 }
 
-.p-cell.highlight {
+.p-cell.highlight, .b-cell.highlight {
     background-color: var(--main-bg-bright-color);
 }
 
+.b-cell.invalid {
+    cursor: not-allowed;
+}
+
 .ship-cell {
-    background-color: orangered;
+    background-color: rgba(0, 200, 255, 0.5);
+}
+
+.ship {
+    background-color: rgb(0, 200, 255);
+}
+
+.p-cell.miss, .b-cell.miss {
+    background-color: rgb(0, 0, 0);
+}
+
+.p-cell.hit, .b-cell.hit {
+    background-color: rgb(255, 0, 0);
+}
+
+.p-cell.sunk, .b-cell.sunk {
+    background-color: rgb(200, 0, 255);
 }

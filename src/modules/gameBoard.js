@@ -18,11 +18,11 @@ class Gameboard {
 		const length = ship.length;
 		if (orientation === "horizontal") {
 			for (let i = 0; i < length; i++) {
-				this.board[r][c + i] = ship;
+				this.board[r][c + i] = { ship, hit: false };
 			}
 		} else if (orientation === "vertical") {
 			for (let i = 0; i < length; i++) {
-				this.board[r + i][c] = ship;
+				this.board[r + i][c] = { ship, hit: false };
 			}
 		}
 	}
@@ -31,19 +31,49 @@ class Gameboard {
 		// Coordinates in [row, col] format, ex. [0, 0]
 		// Reports "miss", "hit", "sunk"
 		const [r, c] = coordinates;
-		if (this.board[r][c] instanceof Ship) {
-			const ship = this.board[r][c];
+		const cell = this.board[r][c];
+
+		if (
+			cell !== null &&
+			typeof cell === "object" &&
+			cell.ship instanceof Ship
+		) {
+			cell.hit = true;
+			const ship = cell.ship;
 			ship.hit();
-			ship.sunk = ship.isSunk();
-			ship.sunk ? (this.board[r][c] = "sunk") : (this.board[r][c] = "hit");
-			return ship.sunk ? "sunk" : "hit";
+
+			if (ship.isSunk()) {
+				for (let i = 0; i < 10; i++) {
+					for (let j = 0; j < 10; j++) {
+						const part = this.board[i][j];
+						if (
+							part !== null &&
+							typeof part === "object" &&
+							part.ship === ship
+						) {
+							this.board[i][j] = "sunk";
+						}
+					}
+				}
+				return "sunk";
+			} else {
+				return "hit";
+			}
 		}
 		this.board[r][c] = "miss";
 		return "miss";
 	}
 
 	allSunk() {
-		return !this.board.some((row) => row.some((item) => item instanceof Ship));
+		return !this.board.some((row) =>
+			row.some(
+				(item) =>
+					item !== null &&
+					typeof item === "object" &&
+					item.ship instanceof Ship &&
+					!item.hit
+			)
+		);
 	}
 }
 
