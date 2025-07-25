@@ -248,20 +248,77 @@ async function botTurn() {
 	await wait(250);
 }
 
+let targetMode = false;
+let lastHit = null;
+let targetQueue = [];
+
 function hitRandomSpot(gameboard) {
-	while (true) {
-		const row = Math.floor(Math.random() * 10);
-		const col = Math.floor(Math.random() * 10);
+	let row, col;
+
+	if (targetMode && targetQueue.length > 0) {
+		[row, col] = targetQueue.shift();
+
+		// Out of bounds, try again
+		if (row < 0 || row > 9 || col < 0 || col > 9) {
+			return hitRandomSpot(gameboard);
+		}
+
+		// Already hit, try again
 		const cell = gameboard.board[row][col];
 		const isUnhitShip =
 			cell !== null &&
 			typeof cell === "object" &&
 			cell.ship instanceof Ship &&
 			!cell.hit;
-		if (cell === null || isUnhitShip) {
-			return gameboard.receiveAttack([row, col]);
+		if (!isUnhitShip && cell !== null) {
+			return hitRandomSpot(gameboard);
+		}
+	} else {
+		// Random
+		while (true) {
+			row = Math.floor(Math.random() * 10);
+			col = Math.floor(Math.random() * 10);
+			const cell = gameboard.board[row][col];
+			const isUnhitShip =
+				cell !== null &&
+				typeof cell === "object" &&
+				cell.ship instanceof Ship &&
+				!cell.hit;
+			if (cell === null || isUnhitShip) {
+				break;
+			}
 		}
 	}
+
+	const result = gameboard.receiveAttack([row, col]);
+	const cell = gameboard.board[row][col];
+
+	// If hit ship, activate targetMode or continue targetMode until sunk
+	if (cell !== null && cell.hit && cell.ship) {
+		if (!targetMode) {
+			targetMode = true;
+			lastHit = [row, col];
+			targetQueue.push(
+				[row - 1, col],
+				[row + 1, col],
+				[row, col - 1],
+				[row, col + 1]
+			);
+		} else {
+			targetQueue.push(
+				[row - 1, col],
+				[row + 1, col],
+				[row, col - 1],
+				[row, col + 1]
+			);
+		}
+		if (cell.ship.isSunk()) {
+			targetMode = false;
+			targetQueue = [];
+			lastHit = null;
+		}
+	}
+	return result;
 }
 
 function enableAttackSelection(gameboard, boardElement, resolve) {
