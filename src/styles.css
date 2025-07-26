@@ -52,6 +52,7 @@ body {
 .boards-container {
     display: flex;
     gap: clamp(1rem, 2.5rem + 10vw, 20rem);
+    margin-bottom: 1rem;
 }
 
 .player-container, .bot-container {
@@ -107,4 +108,27 @@ body {
 
 .p-cell.sunk, .b-cell.sunk {
     background-color: rgb(200, 0, 255);
+}
+
+@media (max-width: 600px) {
+    .main-container {
+        width: 100%;
+        height: auto;
+    }
+
+    .boards-container {
+        flex-direction: column;
+    }
+
+    .player-board, .bot-board {
+        display: grid;
+        grid-template-columns: repeat(10, 2rem);
+        grid-template-rows: repeat(10, 2rem);
+        gap: 0.1rem;
+    }
+
+    .p-cell, .b-cell {
+        width: 2rem;
+        height: 2rem;
+    }
 }
