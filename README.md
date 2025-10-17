@@ -14,7 +14,7 @@ Built as part of [The Odin Project](https://www.theodinproject.com/) curriculum 
 
 ### [Live Demo](https://songzhang015.github.io/project-13-battleship/)
 
-<img src="preview.png" alt="Preview" width="650">
+<img src="preview.png" alt="Preview" width="900">
 
 ## Built Using
 
